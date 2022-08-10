@@ -3,8 +3,6 @@ import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { filtersSlice } from "./filterSlice";
 
-const { Search } = Input;
-
 export default function Filters() {
   const [searchText, setSearchText] = useState("");
   const [filterStatus, setFilterStatus] = useState("All");
@@ -32,7 +30,7 @@ export default function Filters() {
         >
           Search
         </Typography.Paragraph>
-        <Search
+        <Input
           placeholder="input search text"
           value={searchText}
           onChange={handleSearchTextChange}

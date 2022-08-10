@@ -1,30 +1,28 @@
-import { Typography, Divider } from "antd";
+import { Suspense } from "react";
+import { useDispatch } from "react-redux";
+import { Route, Routes } from "react-router-dom";
 import "./App.css";
-import TodoList from "./components/TodoList";
-import Filters from "./components/Filters";
-
-const { Title } = Typography;
-
+import AuthLayout from "./layout/AuthLayout";
+import LoginPage from "./pages/login/LoginPage";
+import RegisterPage from "./pages/register/RegisterPage";
+import TodoPage from "./pages/TodoPage";
+import { authSlice } from "./redux/authSlice";
 function App() {
+  const dispatch = useDispatch();
+  dispatch(authSlice.actions.getUserInfo());
   return (
-    <div
-      style={{
-        width: 500,
-        margin: "0 auto",
-        display: "flex",
-        flexDirection: "column",
-        backgroundColor: "white",
-        padding: 20,
-        boxShadow: "0 0 10px 4px #bfbfbf",
-        borderRadius: 5,
-        height: "90vh",
-      }}
-    >
-      <Title style={{ textAlign: "center" }}>TODO APP</Title>
-      <Filters />
-      <Divider />
-      <TodoList />
-    </div>
+    <Suspense fallback={<></>}>
+      <Routes>
+        <Route element={<AuthLayout />}>
+          <Route path="/login" element={<LoginPage></LoginPage>}></Route>
+          <Route
+            path="/register"
+            element={<RegisterPage></RegisterPage>}
+          ></Route>
+        </Route>
+        <Route path="/todo" element={<TodoPage />}></Route>
+      </Routes>
+    </Suspense>
   );
 }
 
